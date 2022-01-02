@@ -1,44 +1,26 @@
 <template>
   <div class="app">
-    <div class="left">
-      <form @submit.prevent>
-        <h1>Kitob qo'shish</h1>
-        <input
-          v-bind:value="bookName"
-          @input="inputName"
-          class="input"
-          type="text"
-          placeholder="Kitob nomi"
-        />
-        <input
-          v-bind:value="bookClass"
-          @input="inputClass"
-          class="input"
-          type="text"
-          placeholder="Kitob sinfi"
-        />
-        <button class="addBtn" @click="addBook">Kitob qo'shish</button>
-      </form>
-      <div class="book" v-for="book in books" :key="book">
-        <div><strong>Kitob nomi: </strong> {{ book.name }}</div>
-        <div><strong>Sinfi: </strong> {{ book.class }}</div>
-      </div>
+    <div>
+      <book-form />
+      <book-list v-bind:books="books" />
     </div>
-    <div class="right">
-      <button @click="setTime">Show time</button>
-      <div id="time">{{ time }}</div>
-    </div>
+    <time-clock />
   </div>
 </template>
 
 <script>
-let today = new Date()
-let timer = today.getHours() + ':' + today.getMinutes()
+import BookForm from '@/components/BookForm.vue'
+import BookList from '@/components/BookList.vue'
+import TimeClock from '@/components/TimeClock.vue'
 
 export default {
+  components: {
+    BookForm,
+    BookList,
+    TimeClock,
+  },
   data() {
     return {
-      time: '',
       books: [
         {
           name: 'Matematika',
@@ -58,9 +40,6 @@ export default {
     }
   },
   methods: {
-    setTime() {
-      this.time = timer
-    },
     inputName(event) {
       this.bookName = event.target.value
     },
@@ -91,16 +70,5 @@ export default {
   display: flex;
   justify-content: space-evenly;
   margin: 20px;
-}
-.right {
-  margin: 20px 0 0 20px;
-}
-.book {
-  margin: 10px;
-  padding: 14px;
-  border: 1px solid white;
-}
-.input {
-  margin: 14px;
 }
 </style>
